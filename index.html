@@ -70,12 +70,12 @@
 </head>
 <body>
   <main>
-    <p class="label" id="label">25 November · 11:59 PM IST</p>
+    <p class="label" id="label">25 October · 11:59 PM IST</p>
     <div class="clock" id="clock"></div>
   </main>
   <script>
-    // 11:59:00 PM on 25 November 2026, India Standard Time (UTC+5:30)
-    const target = new Date("2026-11-25T23:59:00+05:30").getTime();
+    // 11:59:00 PM on 25 October 2026, India Standard Time (UTC+5:30)
+    const target = new Date("2026-10-25T23:59:00+05:30").getTime();
 
     const clock = document.getElementById("clock");
     const label = document.getElementById("label");
@@ -88,7 +88,7 @@
       const diff = target - Date.now();
 
       if (diff <= 0) {
-        label.textContent = "25 November · 11:59 PM IST";
+        label.textContent = "25 October · 11:59 PM IST";
         clock.innerHTML = '<p class="done">00:00:00</p>';
         return;
       }
