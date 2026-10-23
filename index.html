@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Countdown</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: #000;
+      color: #fff;
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+    }
+
+    main {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .label {
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 500;
+      opacity: 0.7;
+      margin-bottom: 28px;
+    }
+
+    .clock {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .unit {
+      min-width: 88px;
+    }
+
+    .num {
+      font-size: clamp(3rem, 10vw, 6.5rem);
+      font-weight: 300;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .name {
+      margin-top: 10px;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.55;
+    }
+
+    .done {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="label" id="label">25 November · 11:59 PM IST</p>
+    <div class="clock" id="clock"></div>
+  </main>
+  <script>
+    // 11:59:00 PM on 25 November 2026, India Standard Time (UTC+5:30)
+    const target = new Date("2026-11-25T23:59:00+05:30").getTime();
+
+    const clock = document.getElementById("clock");
+    const label = document.getElementById("label");
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function render() {
+      const diff = target - Date.now();
+
+      if (diff <= 0) {
+        label.textContent = "25 November · 11:59 PM IST";
+        clock.innerHTML = '<p class="done">00:00:00</p>';
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      const parts = [
+        [days, "Days"],
+        [pad(hours), "Hours"],
+        [pad(minutes), "Minutes"],
+        [pad(seconds), "Seconds"]
+      ];
+
+      clock.innerHTML = parts.map(([value, name]) =>
+        `<div class="unit"><div class="num">${value}</div><div class="name">${name}</div></div>`
+      ).join("");
+    }
+
+    render();
+    setInterval(render, 1000);
+  </script>
+</body>
+</html>
